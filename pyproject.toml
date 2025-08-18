@@ -26,8 +26,13 @@ classifiers = [
 ]
 
 dependencies = [
+  "array-api-compat>=1.11.2",
+  "numba>=0.60.0",
   "rich>=10",
+  "taichi>=1.7.4",
+  "torch>=2.8.0",
   "typer>=0.15,<1",
+  "warp>=1.0.4",
 ]
 urls."Bug Tracker" = "https://github.com/34j/mandelbrot-benchmark/issues"
 urls.Changelog = "https://github.com/34j/mandelbrot-benchmark/blob/main/CHANGELOG.md"
