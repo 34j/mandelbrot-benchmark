@@ -6,7 +6,8 @@ import taichi as ti
 import torch
 import warp as wp
 
-from mandelbrot_benchmark.backends.numba import mandelbrot_numba, mandelbrot_numba_cuda
+from mandelbrot_benchmark.backends.array_api import mandelbrot_vectorized
+from mandelbrot_benchmark.backends.numba import mandelbrot_numba
 from mandelbrot_benchmark.backends.taichi import mandebrot_taichi
 from mandelbrot_benchmark.backends.warp import mandelbrot_warp
 
@@ -22,10 +23,7 @@ def c(request: pytest.FixtureRequest) -> Any:
 
 
 def test_numba(c: Any) -> None:
-    if c.device.type == "cuda":
-        mandelbrot_numba_cuda(c)
-    else:
-        mandelbrot_numba(c)
+    mandelbrot_numba(c)
 
 
 def test_taichi(c: Any) -> None:
@@ -39,3 +37,7 @@ def test_taichi(c: Any) -> None:
 def test_warp(c: Any) -> None:
     wp.init()
     mandelbrot_warp(c)
+
+
+def test_vectorized(c: Any) -> None:
+    mandelbrot_vectorized(c)

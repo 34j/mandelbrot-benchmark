@@ -16,7 +16,7 @@ def mandelbrot(c: complex) -> int:
     return counter
 
 
-mandelbrot_numba = numba.vectorize(
+_mandelbrot_numba = numba.vectorize(
     [numba.int32(numba.complex64), numba.int32(numba.complex128)], target="parallel"
 )(mandelbrot)
 _mandelbrot_numba_cuda = numba.vectorize(
@@ -24,9 +24,9 @@ _mandelbrot_numba_cuda = numba.vectorize(
 )(mandelbrot)
 
 
-def mandelbrot_numba_cuda(c: Any) -> Any:
+def mandelbrot_numba(c: Any) -> Any:
     """
-    Numba implementation of the Mandelbrot set on CUDA.
+    Numba implementation of the Mandelbrot set.
 
     Parameters
     ----------
@@ -39,5 +39,8 @@ def mandelbrot_numba_cuda(c: Any) -> Any:
         Output array of integers representing the Mandelbrot set.
 
     """
-    c = as_cuda_array(c)
-    return _mandelbrot_numba_cuda(c)
+    if "cuda" in str(c.device):
+        c = as_cuda_array(c)
+        return _mandelbrot_numba_cuda(c)
+    else:
+        return _mandelbrot_numba(c)
