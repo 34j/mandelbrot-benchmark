@@ -1,5 +1,6 @@
 import torch
 import warp as wp
+from array_api_compat import array_namespace
 
 wp.init()
 
@@ -38,8 +39,10 @@ def mandelbrot_warp(c: torch.Tensor) -> torch.Tensor:
         device = "cuda"
     else:
         device = "cpu"
-    field = wp.array(c, dtype=wp.vec2, device=device)
+    xp = array_namespace(c)
     out = wp.empty(shape=c.shape, dtype=wp.int32, device=device)
+    c = xp.stack([c.real, c.imag], axis=-1)
+    field = wp.array(c, dtype=wp.vec2, device=device)
     wp.launch(
         kernel=_mandelbrot_kernel,
         dim=c.shape,
