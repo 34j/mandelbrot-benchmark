@@ -34,10 +34,6 @@ def extent() -> tuple[float, float, float, float]:
 @pytest.fixture(params=["cpu", "cuda"])
 def c(request: pytest.FixtureRequest, extent: tuple[float, float, float, float]) -> Any:
     device = request.param
-    if device == "cuda":
-        ti.init(arch=ti.cuda, default_ip=ti.i32, default_fp=ti.f32)
-    else:
-        ti.init(arch=ti.cpu, default_ip=ti.i32, default_fp=ti.f32)
     x, y = np.meshgrid(
         np.linspace(*extent[:2], 1000),
         np.linspace(*extent[2:], 1000),
@@ -55,6 +51,10 @@ def test_each(c: Any, backend: str, extent: tuple[float, float, float, float]) -
     if backend == "numba":
         z = mandelbrot_numba(c)
     elif backend == "taichi":
+        if c.device.type == "cuda":
+            ti.init(arch=ti.cuda, default_ip=ti.i32, default_fp=ti.f32)
+        else:
+            ti.init(arch=ti.cpu, default_ip=ti.i32, default_fp=ti.f32)
         z = mandebrot_taichi(c)
     elif backend == "warp":
         z = mandelbrot_warp(c)

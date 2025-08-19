@@ -1,10 +1,9 @@
 from typing import Any
 
-import torch
 from array_api_compat import array_namespace
 
 
-@torch.compile
+# @torch.compile
 def mandelbrot_torch(c: Any) -> Any:
     """Pure Python implementation of the Mandelbrot set."""
     xp = array_namespace(c)

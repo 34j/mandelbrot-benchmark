@@ -27,7 +27,7 @@ classifiers = [
 
 dependencies = [
   "array-api-compat>=1.11.2",
-  "jax>=0.4.30",
+  "jax[cuda12]>=0.4.30",
   "matplotlib>=3.9.4",
   "numba>=0.60.0",
   "numpy<=2.3",
