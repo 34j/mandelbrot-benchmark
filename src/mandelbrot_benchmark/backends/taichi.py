@@ -4,8 +4,6 @@ import taichi as ti
 import taichi.math as tm
 from array_api_compat import array_namespace
 
-ti.init(arch=ti.gpu)
-
 
 @ti.func
 def _mandelbrot_func(c: tm.vec2) -> ti.i32:

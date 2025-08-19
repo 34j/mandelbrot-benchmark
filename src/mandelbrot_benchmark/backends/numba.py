@@ -1,4 +1,7 @@
+from typing import Any
+
 import numba
+from numba.cuda import as_cuda_array
 
 
 def mandelbrot(c: complex) -> int:
@@ -16,6 +19,25 @@ def mandelbrot(c: complex) -> int:
 mandelbrot_numba = numba.vectorize(
     [numba.int32(numba.complex64), numba.int32(numba.complex128)], target="parallel"
 )(mandelbrot)
-mandelbrot_numba_cuda = numba.vectorize(
+_mandelbrot_numba_cuda = numba.vectorize(
     [numba.int32(numba.complex64), numba.int32(numba.complex128)], target="cuda"
 )(mandelbrot)
+
+
+def mandelbrot_numba_cuda(c: Any) -> Any:
+    """
+    Numba implementation of the Mandelbrot set on CUDA.
+
+    Parameters
+    ----------
+    c : Any
+        Input array of complex numbers.
+
+    Returns
+    -------
+    Any
+        Output array of integers representing the Mandelbrot set.
+
+    """
+    c = as_cuda_array(c)
+    return _mandelbrot_numba_cuda(c)
