@@ -28,6 +28,7 @@ classifiers = [
 dependencies = [
   "array-api-compat>=1.11.2",
   "numba>=0.60.0",
+  "numpy<=2.3",
   "rich>=10",
   "taichi>=1.7.4",
   "torch>=2.8.0",

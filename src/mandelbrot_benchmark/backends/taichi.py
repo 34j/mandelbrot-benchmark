@@ -6,10 +6,10 @@ from array_api_compat import array_namespace
 
 
 @ti.func
-def mandelbrot_func(c: tm.vec2) -> ti.i32:
+def _mandelbrot_func(c: tm.vec2) -> ti.i32:
     counter = 0
     z = tm.vec2(0.0, 0.0)
-    for i in range(1000):
+    for _ in range(1000):
         z = tm.vec2(z.x**2 - z.y**2, 2 * z.x * z.y) + c
         if z.x**2 + z.y**2 >= 4:
             break
@@ -18,13 +18,14 @@ def mandelbrot_func(c: tm.vec2) -> ti.i32:
 
 
 @ti.kernel
-def mandelbrot_kernel(field: ti.template(), out: ti.template()):
+def _mandelbrot_kernel(field: ti.template(), out: ti.template()):  # type: ignore
     for i, j in field:
-        out[i, j] = mandelbrot_func(field[i, j])
+        out[i, j] = _mandelbrot_func(field[i, j])
 
 
 def mandebrot_taichi(c: Any) -> Any:
+    """Taichi implementation of the Mandelbrot set."""
     xp = array_namespace(c)
     out = xp.empty(c.shape, dtype=xp.int32, device=c.device)
-    mandelbrot_kernel(c, out)
+    _mandelbrot_kernel(c, out)
     return out
