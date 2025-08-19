@@ -4,6 +4,8 @@ import taichi as ti
 import taichi.math as tm
 from array_api_compat import array_namespace
 
+ti.init(arch=ti.gpu)
+
 
 @ti.func
 def _mandelbrot_func(c: tm.vec2) -> ti.i32:
@@ -18,14 +20,25 @@ def _mandelbrot_func(c: tm.vec2) -> ti.i32:
 
 
 @ti.kernel
-def _mandelbrot_kernel(field: ti.template(), out: ti.template()):  # type: ignore
-    for i, j in field:
-        out[i, j] = _mandelbrot_func(field[i, j])
+def _mandelbrot_kernel(c: ti.types.ndarray(), out: ti.types.ndarray()):  # type: ignore
+    for I in ti.grouped(out):
+        out[I] = _mandelbrot_func(tm.vec2(c[I, 0], c[I, 1]))
 
 
 def mandebrot_taichi(c: Any) -> Any:
-    """Taichi implementation of the Mandelbrot set."""
+    """
+    Taichi implementation of the Mandelbrot set.
+
+    Since Taichi does not support complex numbers directly,
+    the input is stacked as a +1D array with real and imaginary parts.
+
+    See Also
+    --------
+    https://docs.taichi-lang.org/docs/external
+
+    """
     xp = array_namespace(c)
     out = xp.empty(c.shape, dtype=xp.int32, device=c.device)
+    c = xp.stack([c.real, c.imag], axis=-1)
     _mandelbrot_kernel(c, out)
     return out
