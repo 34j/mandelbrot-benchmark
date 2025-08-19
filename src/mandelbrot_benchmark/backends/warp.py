@@ -30,6 +30,9 @@ def mandelbrot_warp(c: torch.Tensor) -> torch.Tensor:
     """
     Warp implementation of the Mandelbrot set.
 
+    Warp converts external arrays to its own format zero-copy,
+    therefore we do not need to worry about it.
+
     See Also
     --------
     https://nvidia.github.io/warp/modules/interoperability.html
