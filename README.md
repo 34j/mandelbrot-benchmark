@@ -48,10 +48,15 @@ Benchmark Numba, Taichi, Warp, CuPy Kernel, Triton using Mandelbrot set
 
 ![Results](https://raw.githubusercontent.com/34j/mandelbrot-benchmark/main/results.png)
 
-- The results are almost identical if `device = cuda`
-- `Numba` is the fastest for CPU
+- The results are almost identical when `device = cuda`
+- The computation time for `Numba` is quite unstable
+- `Numba` and `JAX` are fast when `device = cpu` and the number of pixels is large
 
 ![Mandelbrot Set](https://raw.githubusercontent.com/34j/mandelbrot-benchmark/main/test_backends_jax_cpu.png)
+
+## Some notes
+
+- The type of variables needs to be explicitly specified to use `float32` instead of `float64`, which is the default in `Numba`, while is not the case for `Taichi`, `Warp`.
 
 ## Installation
 

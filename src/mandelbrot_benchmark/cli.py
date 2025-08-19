@@ -40,7 +40,7 @@ def benchmark() -> None:
 
             # Run each backend
             for backend in ["numba", "taichi", "warp", "jax"]:
-                for i in range(10):
+                for i in range(33):
                     with timer() as t:
                         if backend == "numba":
                             z = mandelbrot_numba(c)
