@@ -15,4 +15,4 @@ def test_plot():
     z = _mandelbrot_numba(c)
     fig, ax = plt.subplots(figsize=(10, 10))
     plot_mandelbrot(z, ax=ax, extent=extent)
-    fig.savefig("tests/test_plot.png")
+    fig.savefig("tests/.cache/test_plot.png")
