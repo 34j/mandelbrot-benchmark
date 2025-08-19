@@ -5,6 +5,7 @@ import taichi as ti
 import torch
 import typer
 import warp as wp
+from aquarel import load_theme
 from cm_time import timer
 
 from mandelbrot_benchmark.backends.jax import mandelbrot_jax
@@ -72,6 +73,8 @@ def benchmark() -> None:
 @app.command()
 def plot() -> None:
     """Plot the results."""
+    theme = load_theme("boxy_dark")
+    theme.apply()
     df = pd.read_csv("results.csv")
     g = sns.relplot(
         data=df,

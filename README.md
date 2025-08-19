@@ -42,6 +42,17 @@ Benchmark Numba, Taichi, Warp, CuPy Kernel, Triton using Mandelbrot set
 
 ## Results
 
+- 200 iterations max
+- $c \in [-2, 1] \times [-1.5, 1.5]$
+- JAX version is quite hacky ("vectorized")
+
+![Results](https://raw.githubusercontent.com/34j/mandelbrot-benchmark/main/results.png)
+
+- The results are almost identical if `device = cuda`
+- `Numba` is the fastest for CPU
+
+![Mandelbrot Set](https://raw.githubusercontent.com/34j/mandelbrot-benchmark/main/test_backends_jax_cpu.png)
+
 ## Installation
 
 Install this via pip (or your favourite package manager):

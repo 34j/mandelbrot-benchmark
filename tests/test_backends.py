@@ -7,6 +7,7 @@ import pytest
 import taichi as ti
 import torch
 import warp as wp
+from aquarel import load_theme
 from array_api_compat import to_device
 from numpy.testing import assert_array_equal
 
@@ -64,6 +65,8 @@ def test_each(c: Any, backend: str, extent: tuple[float, float, float, float]) -
         z = mandelbrot_jax(c)
     else:
         raise ValueError(f"Unknown backend: {backend}")
+    theme = load_theme("boxy_dark")
+    theme.apply()
     fig, ax = plt.subplots()
     if backend != "numba":
         z = to_device(z, "cpu")
