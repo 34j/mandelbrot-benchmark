@@ -2,6 +2,7 @@ from typing import Any
 
 import numba
 from numba.cuda import as_cuda_array
+from numba.cuda.cudadrv.error import CudaSupportError
 
 
 def _mandelbrot_32(c: Any) -> Any:
@@ -19,10 +20,13 @@ def _mandelbrot_32(c: Any) -> Any:
 _mandelbrot_numba = numba.vectorize(
     [numba.int32(numba.complex64)], target="parallel", nopython=True, fastmath=True
 )(_mandelbrot_32)
-_mandelbrot_numba_cuda = numba.vectorize(
-    [numba.int32(numba.complex64)],
-    target="cuda",
-)(_mandelbrot_32)
+try:
+    _mandelbrot_numba_cuda = numba.vectorize(
+        [numba.int32(numba.complex64)],
+        target="cuda",
+    )(_mandelbrot_32)
+except CudaSupportError:
+    _mandelbrot_numba_cuda = None
 
 
 def mandelbrot_numba(c: Any) -> Any:
