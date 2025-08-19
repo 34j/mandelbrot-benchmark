@@ -7,12 +7,10 @@ from array_api_compat import array_namespace
 def mandelbrot_torch(c: Any) -> Any:
     """Pure Python implementation of the Mandelbrot set."""
     xp = array_namespace(c)
-    counter = xp.zeros(c.shape, dtype=xp.int32, device=c.device)
+    counter = xp.full(c.shape, -1, dtype=xp.int32, device=c.device)
     z = xp.zeros_like(c)
-    for _ in range(20):
+    for i in range(20):
         z = z * z + c
-        idx = z.real**2 + z.imag**2 < 4
-        if not xp.any(idx):
-            break
-        counter[idx] += 1
+        idx = (z.real**2 + z.imag**2 < 4) & (counter == -1)
+        counter[idx] = i
     return counter

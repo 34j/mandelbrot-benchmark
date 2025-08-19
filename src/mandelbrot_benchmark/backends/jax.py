@@ -7,13 +7,12 @@ from dlpack import asdlpack
 @jax.jit
 def _mandelbrot_jax(c: jnp.ndarray) -> jnp.ndarray:
     """JAX implementation of the Mandelbrot set."""
-    counter = jnp.zeros(c.shape[0], dtype=jnp.int32)
+    counter = jnp.full(c.shape[0], -1, dtype=jnp.int32)
     z = jnp.zeros_like(c, dtype=c.dtype)
     for i in range(20):
         z = z**2 + c
-        diverged = jnp.abs(z) > 2
         counter = jnp.where(
-            diverged, i, counter
+            jnp.abs(z) > 2 & (counter == -1), i, counter
         )  # use a ternary operator ("where") instead of masked-assignment
     return counter
 
