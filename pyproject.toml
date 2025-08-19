@@ -27,6 +27,7 @@ classifiers = [
 
 dependencies = [
   "array-api-compat>=1.11.2",
+  "matplotlib>=3.9.4",
   "numba>=0.60.0",
   "numpy<=2.3",
   "rich>=10",

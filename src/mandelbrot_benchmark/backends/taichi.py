@@ -30,7 +30,7 @@ def mandebrot_taichi(c: Any) -> Any:
     Taichi implementation of the Mandelbrot set.
 
     Since Taichi does not support complex numbers directly,
-    the input is stacked as a +1D array with real and imaginary parts.
+    internally the input is stacked as a +1D array with real and imaginary parts.
 
     See Also
     --------
