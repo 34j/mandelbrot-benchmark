@@ -11,9 +11,7 @@ def _mandelbrot_jax(c: jnp.ndarray) -> jnp.ndarray:
     z = jnp.zeros_like(c, dtype=c.dtype)
     for i in range(200):
         z = z**2 + c
-        counter = jnp.where(
-            jnp.abs(z) > 2 & (counter == 200), i, counter
-        )  # use a ternary operator ("where") instead of masked-assignment
+        counter = jnp.where(jnp.abs(z) > 2 & (counter == 200), i, counter)
     return counter
 
 
