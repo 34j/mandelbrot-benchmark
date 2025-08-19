@@ -11,13 +11,12 @@ license = { text = "MIT" }
 authors = [
   { name = "34j", email = "34j.95a2p@simplelogin.com" },
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
   "Intended Audience :: Developers",
   "Natural Language :: English",
   "Operating System :: OS Independent",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -26,8 +25,21 @@ classifiers = [
 ]
 
 dependencies = [
+  "aquarel>=0.0.7",
+  "array-api-compat>=1.11.2",
+  "cm-time>=0.1.2",
+  "jax[cuda12]>=0.4.30",
+  "matplotlib>=3.9.4",
+  "numba>=0.60.0",
+  "numpy<=2.3",
+  "pandas>=2.3.1",
+  "pydlpack>=0.2.1",
   "rich>=10",
+  "seaborn>=0.13.2",
+  "taichi>=1.7.4",
+  "torch>=2.8.0",
   "typer>=0.15,<1",
+  "warp-lang>=1.8.1",
 ]
 urls."Bug Tracker" = "https://github.com/34j/mandelbrot-benchmark/issues"
 urls.Changelog = "https://github.com/34j/mandelbrot-benchmark/blob/main/CHANGELOG.md"
@@ -68,6 +80,7 @@ lint.ignore = [
   "D104", # Missing docstring in public package
   "D107", # Missing docstring in `__init__`
   "D401", # First line of docstring should be in imperative mood
+  "E741", # Ambiguous variable name
 ]
 lint.per-file-ignores."conftest.py" = [ "D100" ]
 lint.per-file-ignores."docs/conf.py" = [ "D100" ]
@@ -86,9 +99,6 @@ lint.isort.known-first-party = [ "mandelbrot_benchmark", "tests" ]
 addopts = """\
     -v
     -Wdefault
-    --cov=mandelbrot_benchmark
-    --cov-report=term
-    --cov-report=xml
     """
 pythonpath = [ "src" ]
 
