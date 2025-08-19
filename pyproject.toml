@@ -27,12 +27,15 @@ classifiers = [
 
 dependencies = [
   "array-api-compat>=1.11.2",
+  "cm-time>=0.1.2",
   "jax[cuda12]>=0.4.30",
   "matplotlib>=3.9.4",
   "numba>=0.60.0",
   "numpy<=2.3",
+  "pandas>=2.3.1",
   "pydlpack>=0.2.1",
   "rich>=10",
+  "seaborn>=0.13.2",
   "taichi>=1.7.4",
   "torch>=2.8.0",
   "typer>=0.15,<1",
