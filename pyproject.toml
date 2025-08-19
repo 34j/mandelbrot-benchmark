@@ -96,9 +96,6 @@ lint.isort.known-first-party = [ "mandelbrot_benchmark", "tests" ]
 addopts = """\
     -v
     -Wdefault
-    --cov=mandelbrot_benchmark
-    --cov-report=term
-    --cov-report=xml
     """
 pythonpath = [ "src" ]
 
