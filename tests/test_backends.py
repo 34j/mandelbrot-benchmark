@@ -10,9 +10,10 @@ import warp as wp
 from array_api_compat import to_device
 from numpy.testing import assert_array_equal
 
+from mandelbrot_benchmark.backends.jax import mandelbrot_jax
 from mandelbrot_benchmark.backends.numba import mandelbrot_numba
 from mandelbrot_benchmark.backends.taichi import mandebrot_taichi
-from mandelbrot_benchmark.backends.torch import mandelbrot_vectorized
+from mandelbrot_benchmark.backends.torch import mandelbrot_torch
 from mandelbrot_benchmark.backends.warp import mandelbrot_warp
 from mandelbrot_benchmark.plot import plot_mandelbrot
 
@@ -49,7 +50,7 @@ def c(request: pytest.FixtureRequest, extent: tuple[float, float, float, float])
     )
 
 
-@pytest.mark.parametrize("backend", ["numba", "taichi", "warp", "vectorized"])
+@pytest.mark.parametrize("backend", ["numba", "taichi", "warp", "torch", "jax"])
 def test_each(c: Any, backend: str, extent: tuple[float, float, float, float]) -> None:
     if backend == "numba":
         z = mandelbrot_numba(c)
@@ -57,8 +58,10 @@ def test_each(c: Any, backend: str, extent: tuple[float, float, float, float]) -
         z = mandebrot_taichi(c)
     elif backend == "warp":
         z = mandelbrot_warp(c)
-    elif backend == "vectorized":
-        z = mandelbrot_vectorized(c)
+    elif backend == "torch":
+        z = mandelbrot_torch(c)
+    elif backend == "jax":
+        z = mandelbrot_jax(c)
     else:
         raise ValueError(f"Unknown backend: {backend}")
     fig, ax = plt.subplots()
@@ -80,7 +83,7 @@ def test_all_same(c: Any) -> None:
     numba_result = mandelbrot_numba(c)
     taichi_result = mandebrot_taichi(c)
     warp_result = mandelbrot_warp(c)
-    vectorized_result = mandelbrot_vectorized(c)
+    vectorized_result = mandelbrot_torch(c)
 
     assert_array_equal(numba_result, warp_result)
     assert_array_equal(numba_result, taichi_result)
