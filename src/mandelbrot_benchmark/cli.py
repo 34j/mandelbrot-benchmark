@@ -38,7 +38,7 @@ def benchmark() -> None:
             c = torch.asarray(c, dtype=torch.complex64, device=device)
 
             # Run each backend
-            for backend in ["numba", "taichi", "warp", "torch", "jax"]:
+            for backend in ["numba", "taichi", "warp", "jax"]:
                 for i in range(10):
                     with timer() as t:
                         if backend == "numba":

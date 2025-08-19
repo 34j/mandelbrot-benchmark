@@ -4,10 +4,10 @@ import numba
 from numba.cuda import as_cuda_array
 
 
-def mandelbrot(c: complex) -> int:
+def _mandelbrot_32(c: Any) -> Any:
     """Pure Python implementation of the Mandelbrot set."""
-    counter = 0
-    z = 0j
+    counter = numba.int32(0)
+    z = numba.complex64(0)
     for _ in range(200):
         z = z * z + c
         if z.real**2 + z.imag**2 >= 4:
@@ -17,11 +17,12 @@ def mandelbrot(c: complex) -> int:
 
 
 _mandelbrot_numba = numba.vectorize(
-    [numba.int32(numba.complex64), numba.int32(numba.complex128)], target="parallel"
-)(mandelbrot)
+    [numba.int32(numba.complex64)], target="parallel", nopython=True, fastmath=True
+)(_mandelbrot_32)
 _mandelbrot_numba_cuda = numba.vectorize(
-    [numba.int32(numba.complex64), numba.int32(numba.complex128)], target="cuda"
-)(mandelbrot)
+    [numba.int32(numba.complex64)],
+    target="cuda",
+)(_mandelbrot_32)
 
 
 def mandelbrot_numba(c: Any) -> Any:

@@ -40,6 +40,8 @@
 
 Benchmark Numba, Taichi, Warp, CuPy Kernel, Triton using Mandelbrot set
 
+## Results
+
 ## Installation
 
 Install this via pip (or your favourite package manager):
