@@ -1,12 +1,92 @@
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import taichi as ti
+import torch
 import typer
-from rich import print
+import warp as wp
+from aquarel import load_theme
+from cm_time import timer
 
-from .main import add
+from mandelbrot_benchmark.backends.jax import mandelbrot_jax
+from mandelbrot_benchmark.backends.numba import mandelbrot_numba
+from mandelbrot_benchmark.backends.taichi import mandebrot_taichi
+from mandelbrot_benchmark.backends.torch import mandelbrot_torch
+from mandelbrot_benchmark.backends.warp import mandelbrot_warp
 
 app = typer.Typer()
 
 
 @app.command()
-def main(n1: int, n2: int) -> None:
-    """Add the arguments and print the result."""
-    print(add(n1, n2))
+def benchmark() -> None:
+    """Run the Mandelbrot benchmark for different backends and devices."""
+    data = []
+
+    # init Warp
+    wp.init()
+    for device in ["cpu", "cuda"]:
+        # init Taichi
+        if device == "cuda":
+            ti.init(arch=ti.cuda, default_ip=ti.i32, default_fp=ti.f32)
+        else:
+            ti.init(arch=ti.cpu, default_ip=ti.i32, default_fp=ti.f32)
+        for size in 2 ** np.arange(1, 10 if device == "cpu" else 12):
+            # Create a grid of complex numbers
+            x, y = np.meshgrid(
+                np.linspace(-2.0, 1.0, size), np.linspace(-1.5, 1.5, size)
+            )
+            c = x + 1j * y
+            c = torch.asarray(c, dtype=torch.complex64, device=device)
+
+            # Run each backend
+            for backend in ["numba", "taichi", "warp", "jax"]:
+                for i in range(33):
+                    with timer() as t:
+                        if backend == "numba":
+                            z = mandelbrot_numba(c)
+                        elif backend == "taichi":
+                            z = mandebrot_taichi(c)
+                        elif backend == "warp":
+                            z = mandelbrot_warp(c)
+                        elif backend == "torch":
+                            z = mandelbrot_torch(c)
+                        elif backend == "jax":
+                            z = mandelbrot_jax(c)
+                        else:
+                            raise ValueError(f"Unknown backend: {backend}")
+                        str(z[0, 0].item())
+                    if i == 0:
+                        continue
+                    data.append(
+                        {
+                            "backend": backend,
+                            "device": device,
+                            "time": t.elapsed,
+                            "size": size**2,
+                        }
+                    )
+                    torch.cuda.empty_cache()
+    df = pd.DataFrame(data)
+    df.to_csv("results.csv", index=False)
+
+
+@app.command()
+def plot() -> None:
+    """Plot the results."""
+    theme = load_theme("boxy_dark")
+    theme.apply()
+    df = pd.read_csv("results.csv")
+    g = sns.relplot(
+        data=df,
+        x="size",
+        y="time",
+        col="device",
+        hue="backend",
+        kind="line",
+        style="backend",
+        markers={"numba": "o", "taichi": "s", "warp": "D", "torch": "^", "jax": "v"},
+    )
+    g.set_xlabels("Number of pixels")
+    g.set_ylabels("Time (s)")
+    g.set(xscale="log", yscale="log")
+    g.savefig("results.png", dpi=300)
