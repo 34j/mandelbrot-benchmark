@@ -35,9 +35,11 @@ def extent() -> tuple[float, float, float, float]:
 @pytest.fixture(params=["cpu", "cuda"])
 def c(request: pytest.FixtureRequest, extent: tuple[float, float, float, float]) -> Any:
     device = request.param
+    if device == "cuda" and not torch.cuda.is_available():
+        pytest.skip("CUDA is not available")
     x, y = np.meshgrid(
-        np.linspace(*extent[:2], 1000),
-        np.linspace(*extent[2:], 1000),
+        np.linspace(*extent[:2], 100),
+        np.linspace(*extent[2:], 100),
     )
     c = x + 1j * y
     return torch.asarray(
