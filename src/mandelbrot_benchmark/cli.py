@@ -77,7 +77,7 @@ def plot() -> None:
         data=df,
         x="size",
         y="time",
-        row="device",
+        col="device",
         hue="backend",
         kind="line",
         style="backend",
