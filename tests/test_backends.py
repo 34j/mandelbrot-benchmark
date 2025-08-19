@@ -10,9 +10,9 @@ import warp as wp
 from array_api_compat import to_device
 from numpy.testing import assert_array_equal
 
-from mandelbrot_benchmark.backends.array_api import mandelbrot_vectorized
 from mandelbrot_benchmark.backends.numba import mandelbrot_numba
 from mandelbrot_benchmark.backends.taichi import mandebrot_taichi
+from mandelbrot_benchmark.backends.torch import mandelbrot_vectorized
 from mandelbrot_benchmark.backends.warp import mandelbrot_warp
 from mandelbrot_benchmark.plot import plot_mandelbrot
 

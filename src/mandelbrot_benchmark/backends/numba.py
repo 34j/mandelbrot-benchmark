@@ -8,8 +8,8 @@ def mandelbrot(c: complex) -> int:
     """Pure Python implementation of the Mandelbrot set."""
     counter = 0
     z = 0j
-    for _ in range(1000):
-        z = z**2 + c
+    for _ in range(20):
+        z = z * z + c
         if z.real**2 + z.imag**2 >= 4:
             break
         counter += 1

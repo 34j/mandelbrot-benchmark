@@ -11,7 +11,7 @@ wp.init()
 def _mandelbrot_func(c: wp.vec2f) -> wp.int32:
     counter = wp.int32(0)
     z = type(c)()
-    for _ in range(1000):
+    for _ in range(20):
         z = wp.vec2f(z[0] * z[0] - z[1] * z[1], 2.0 * z[0] * z[1]) + c
         if z[0] * z[0] + z[1] * z[1] >= 4.0:
             break
@@ -23,7 +23,7 @@ def _mandelbrot_func(c: wp.vec2f) -> wp.int32:
 def _mandelbrot_func(c: wp.vec2d) -> wp.int32:
     counter = wp.int32(0)
     z = type(c)()
-    for _ in range(1000):
+    for _ in range(20):
         z = wp.vec2d(z[0] * z[0] - z[1] * z[1], wp.float64(2.0) * z[0] * z[1]) + c
         if z[0] * z[0] + z[1] * z[1] >= wp.float64(4.0):
             break
