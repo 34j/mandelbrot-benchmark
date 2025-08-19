@@ -56,13 +56,29 @@ Benchmark Numba, Taichi, Warp, CuPy Kernel, Triton using Mandelbrot set
 
 ## Some notes
 
-- The type of variables needs to be explicitly specified to use `float32` instead of `float64`, which is the default in `Numba`, while is not the case for `Taichi`, `Warp`.
+- In `Numba`, the type of variables needs to be explicitly specified to use `float32` instead of `float64` (default), while is not the case for `Taichi`, `Warp`.
 
 ## Installation
 
 Install this via pip (or your favourite package manager):
 
-`pip install mandelbrot-benchmark`
+```shell
+pipx install mandelbrot-benchmark
+```
+
+## Usage
+
+Run the benchmark and plot the results:
+
+```shell
+mandelbrot-benchmark benchmark
+mandelbrot-benchmark plot
+```
+
+## Alternatives
+
+- [YanagiAyame/python-mandelbrot-benchmark: Which is better, Numba, Taichi, Warp or JAX?](https://github.com/YanagiAyame/python-mandelbrot-benchmark)
+- [mandelbrot-on-all-accelerators.ipynb](https://gist.github.com/jpivarski/da343abd8024834ee8c5aaba691aafc7)
 
 ## Contributors ✨
 
