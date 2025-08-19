@@ -32,6 +32,10 @@ def mandebrot_taichi(c: Any) -> Any:
     Since Taichi does not support complex numbers directly,
     internally the input is stacked as a +1D array with real and imaginary parts.
 
+    Taichi's from_numpy() and to_numpy() are !!NOT!! zero-copy,
+    so we pass non-Taichi arrays directly to the kernel.
+    (See "Note" in https://docs.taichi-lang.org/docs/external)
+
     See Also
     --------
     https://docs.taichi-lang.org/docs/external
