@@ -9,7 +9,7 @@ def mandelbrot_torch(c: Any) -> Any:
     xp = array_namespace(c)
     counter = xp.full(c.shape, -1, dtype=xp.int32, device=c.device)
     z = xp.zeros_like(c)
-    for i in range(20):
+    for i in range(200):
         z = z * z + c
         idx = (z.real**2 + z.imag**2 < 4) & (counter == -1)
         counter[idx] = i

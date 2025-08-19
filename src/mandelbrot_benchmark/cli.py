@@ -29,7 +29,7 @@ def benchmark() -> None:
             ti.init(arch=ti.cuda, default_ip=ti.i32, default_fp=ti.f32)
         else:
             ti.init(arch=ti.cpu, default_ip=ti.i32, default_fp=ti.f32)
-        for size in 2 ** np.arange(1, 12):
+        for size in 2 ** np.arange(1, 10 if device == "cpu" else 12):
             # Create a grid of complex numbers
             x, y = np.meshgrid(
                 np.linspace(-2.0, 1.0, size), np.linspace(-1.5, 1.5, size)
@@ -42,17 +42,18 @@ def benchmark() -> None:
                 for i in range(10):
                     with timer() as t:
                         if backend == "numba":
-                            mandelbrot_numba(c)
+                            z = mandelbrot_numba(c)
                         elif backend == "taichi":
-                            mandebrot_taichi(c)
+                            z = mandebrot_taichi(c)
                         elif backend == "warp":
-                            mandelbrot_warp(c)
+                            z = mandelbrot_warp(c)
                         elif backend == "torch":
-                            mandelbrot_torch(c)
+                            z = mandelbrot_torch(c)
                         elif backend == "jax":
-                            mandelbrot_jax(c)
+                            z = mandelbrot_jax(c)
                         else:
                             raise ValueError(f"Unknown backend: {backend}")
+                        str(z[0, 0].item())
                     if i == 0:
                         continue
                     data.append(
@@ -63,6 +64,7 @@ def benchmark() -> None:
                             "size": size**2,
                         }
                     )
+                    torch.cuda.empty_cache()
     df = pd.DataFrame(data)
     df.to_csv("results.csv", index=False)
 

@@ -9,7 +9,7 @@ def _mandelbrot_jax(c: jnp.ndarray) -> jnp.ndarray:
     """JAX implementation of the Mandelbrot set."""
     counter = jnp.full(c.shape[0], -1, dtype=jnp.int32)
     z = jnp.zeros_like(c, dtype=c.dtype)
-    for i in range(20):
+    for i in range(200):
         z = z**2 + c
         counter = jnp.where(
             jnp.abs(z) > 2 & (counter == -1), i, counter
