@@ -50,7 +50,7 @@ Benchmark Numba, Taichi, Warp, CuPy Kernel, Triton using Mandelbrot set
 
 - The results are almost identical when `device = cuda`
 - The computation time for `Numba` is quite unstable
-- `Numba` and `JAX` are fast when `device = cpu` and the number of pixels is large
+- `JAX` version is omitted because it makes the benchmark unstable
 
 ![Mandelbrot Set](https://raw.githubusercontent.com/34j/mandelbrot-benchmark/main/test_backends_jax_cpu.png)
 

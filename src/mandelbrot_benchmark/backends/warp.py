@@ -7,25 +7,25 @@ from array_api_compat import array_namespace
 
 @wp.func
 def _mandelbrot_func(c: wp.vec2f) -> wp.int32:
-    counter = wp.int32(0)
+    counter = wp.int32(200)
     z = type(c)()
-    for _ in range(200):
+    for i in range(200):
         z = wp.vec2f(z[0] * z[0] - z[1] * z[1], 2.0 * z[0] * z[1]) + c
         if z[0] * z[0] + z[1] * z[1] >= 4.0:
+            counter = i
             break
-        counter += 1
     return counter
 
 
 @wp.func  # type: ignore
 def _mandelbrot_func(c: wp.vec2d) -> wp.int32:
-    counter = wp.int32(0)
+    counter = wp.int32(200)
     z = type(c)()
-    for _ in range(200):
+    for i in range(200):
         z = wp.vec2d(z[0] * z[0] - z[1] * z[1], wp.float64(2.0) * z[0] * z[1]) + c
         if z[0] * z[0] + z[1] * z[1] >= wp.float64(4.0):
+            counter = i
             break
-        counter += 1
     return counter
 
 

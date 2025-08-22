@@ -7,13 +7,13 @@ from numba.cuda.cudadrv.error import CudaSupportError
 
 def _mandelbrot_32(c: Any) -> Any:
     """Pure Python implementation of the Mandelbrot set."""
-    counter = numba.int32(0)
+    counter = numba.int32(200)
     z = numba.complex64(0)
-    for _ in range(200):
+    for i in range(200):
         z = z * z + c
         if z.real**2 + z.imag**2 >= 4:
+            counter = i
             break
-        counter += 1
     return counter
 
 
