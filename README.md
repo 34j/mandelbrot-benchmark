@@ -46,6 +46,7 @@ Benchmark Numba, Taichi, Warp, CuPy Kernel, Triton using Mandelbrot set
 - $c \in [-2, 1] \times [-1.5, 1.5]$
 - JAX version is quite hacky ("vectorized")
 - `JAX` version is omitted because it makes the benchmark unstable (see previous release for the comparison)
+- AMD Ryzen 9 3950X + NVIDIA GeForce RTX 4070 SUPER
 
 ![Results](https://raw.githubusercontent.com/34j/mandelbrot-benchmark/main/results.png)
 
