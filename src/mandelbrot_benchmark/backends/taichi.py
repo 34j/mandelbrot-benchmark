@@ -7,13 +7,13 @@ from array_api_compat import array_namespace
 
 @ti.func
 def _mandelbrot_func(c: tm.vec2) -> ti.i32:
-    counter = 0
+    counter = ti.i32(200)
     z = tm.vec2(0, 0)
-    for _ in range(200):
+    for i in range(200):
         z = tm.cpow(z, 2) + c
         if z.x**2 + z.y**2 >= 4.0:
+            counter = i
             break
-        counter += 1
     return counter
 
 

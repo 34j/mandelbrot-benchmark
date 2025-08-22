@@ -1,3 +1,5 @@
+import warnings
+
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -7,6 +9,8 @@ import typer
 import warp as wp
 from aquarel import load_theme
 from cm_time import timer
+from numba.core.errors import NumbaPerformanceWarning
+from tqdm import tqdm, trange
 
 from mandelbrot_benchmark.backends.jax import mandelbrot_jax
 from mandelbrot_benchmark.backends.numba import mandelbrot_numba
@@ -18,19 +22,36 @@ app = typer.Typer()
 
 
 @app.command()
-def benchmark() -> None:
+def benchmark(
+    backends: str = "numba,taichi,warp",
+    max_size_cpu: int = 10,
+    max_size_cuda: int = 13,
+    size_step: float = 0.1,
+) -> None:
     """Run the Mandelbrot benchmark for different backends and devices."""
+    warnings.filterwarnings("ignore", category=NumbaPerformanceWarning)
     data = []
 
     # init Warp
     wp.init()
-    for device in ["cpu", "cuda"]:
+    for device in tqdm(["cpu", "cuda"], position=0, leave=False):
         # init Taichi
         if device == "cuda":
             ti.init(arch=ti.cuda, default_ip=ti.i32, default_fp=ti.f32)
         else:
             ti.init(arch=ti.cpu, default_ip=ti.i32, default_fp=ti.f32)
-        for size in 2 ** np.arange(1, 10 if device == "cpu" else 12):
+        for size in tqdm(
+            (
+                2
+                ** np.arange(
+                    1,
+                    max_size_cpu if device == "cpu" else max_size_cuda,
+                    step=size_step,
+                )
+            ).astype(int),
+            position=1,
+            leave=False,
+        ):
             # Create a grid of complex numbers
             x, y = np.meshgrid(
                 np.linspace(-2.0, 1.0, size), np.linspace(-1.5, 1.5, size)
@@ -39,8 +60,8 @@ def benchmark() -> None:
             c = torch.asarray(c, dtype=torch.complex64, device=device)
 
             # Run each backend
-            for backend in ["numba", "taichi", "warp", "jax"]:
-                for i in range(33):
+            for backend in tqdm(backends.split(","), position=2, leave=False):
+                for i in trange(10, position=3, leave=False):
                     with timer() as t:
                         if backend == "numba":
                             z = mandelbrot_numba(c)
