@@ -45,14 +45,14 @@ Benchmark Numba, Taichi, Warp, CuPy Kernel, Triton using Mandelbrot set
 - 200 iterations max
 - $c \in [-2, 1] \times [-1.5, 1.5]$
 - JAX version is quite hacky ("vectorized")
+- `JAX` version is omitted because it makes the benchmark unstable (see previous release for the comparison)
 
 ![Results](https://raw.githubusercontent.com/34j/mandelbrot-benchmark/main/results.png)
 
 - The results are almost identical when `device = cuda`
 - The computation time for `Numba` is quite unstable
-- `JAX` version is omitted because it makes the benchmark unstable
 
-![Mandelbrot Set](https://raw.githubusercontent.com/34j/mandelbrot-benchmark/main/test_backends_jax_cpu.png)
+![Mandelbrot Set](https://raw.githubusercontent.com/34j/mandelbrot-benchmark/main/test_plot.png)
 
 ## Some notes
 
