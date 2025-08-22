@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.1.1-rc.1 (2025-08-22)
+
+### Bug fixes
+
+- Optimize code to get faster results ([`c6fc28d`](https://github.com/34j/mandelbrot-benchmark/commit/c6fc28d4d2a52f7c449aed526361628cfc99211b))
+
 ## v1.1.0 (2025-08-19)
 
 ### Features
