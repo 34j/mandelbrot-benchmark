@@ -22,7 +22,12 @@ app = typer.Typer()
 
 
 @app.command()
-def benchmark(backends: str = "numba,taichi,warp") -> None:
+def benchmark(
+    backends: str = "numba,taichi,warp",
+    max_size_cpu: int = 10,
+    max_size_cuda: int = 13,
+    size_step: float = 0.1,
+) -> None:
     """Run the Mandelbrot benchmark for different backends and devices."""
     warnings.filterwarnings("ignore", category=NumbaPerformanceWarning)
     data = []
@@ -36,7 +41,14 @@ def benchmark(backends: str = "numba,taichi,warp") -> None:
         else:
             ti.init(arch=ti.cpu, default_ip=ti.i32, default_fp=ti.f32)
         for size in tqdm(
-            (2 ** np.arange(1, 10 if device == "cpu" else 13, step=0.1)).astype(int),
+            (
+                2
+                ** np.arange(
+                    1,
+                    max_size_cpu if device == "cpu" else max_size_cuda,
+                    step=size_step,
+                )
+            ).astype(int),
             position=1,
             leave=False,
         ):
