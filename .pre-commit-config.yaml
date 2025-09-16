@@ -57,6 +57,6 @@ repos:
       - id: mypy
         additional_dependencies: []
   - repo: https://github.com/NixOS/nixfmt
-    rev: v1.0.0
+    rev: v1.0.1
     hooks:
       - id: nixfmt
