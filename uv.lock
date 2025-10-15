@@ -1016,7 +1016,7 @@ requires-dist = [
     { name = "jax", extras = ["cuda12"], specifier = ">=0.4.30" },
     { name = "matplotlib", specifier = ">=3.9.4" },
     { name = "numba", specifier = ">=0.60.0" },
-    { name = "numpy", specifier = "<=2.3.3" },
+    { name = "numpy", specifier = "<=2.3.4" },
     { name = "pandas", specifier = ">=2.3.1" },
     { name = "pydlpack", specifier = ">=0.2.1" },
     { name = "rich", specifier = ">=10" },
