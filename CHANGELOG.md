@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.1.4 (2025-10-16)
+
+### Bug fixes
+
+- Update dependency numpy to <=2.3.4 ([`f42279e`](https://github.com/34j/mandelbrot-benchmark/commit/f42279e3eb678b595622567a4f733accd8271ce8))
+
 ## v1.1.3 (2025-09-10)
 
 ### Bug fixes
