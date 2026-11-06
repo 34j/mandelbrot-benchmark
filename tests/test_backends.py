@@ -26,7 +26,7 @@ def setup_module():
     Path("tests/.cache").mkdir(parents=True, exist_ok=True)
 
 
-@pytest.fixture()
+@pytest.fixture
 def extent() -> tuple[float, float, float, float]:
     """Fixture for the extent of the Mandelbrot set."""
     return (-2.0, 1.0, -1.5, 1.5)

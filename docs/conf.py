@@ -73,15 +73,14 @@ def run_apidoc(_: Any) -> None:
     docs_path = Path(__file__).parent
     module_path = docs_path.parent / "src" / "mandelbrot_benchmark"
 
-    apidoc.main(
-        [
-            "--force",
-            "--module-first",
-            "-o",
-            docs_path.as_posix(),
-            module_path.as_posix(),
-        ]
-    )
+    apidoc.main([
+        "--force",
+        "--module-first",
+        "--no-toc",
+        "-o",
+        docs_path.as_posix(),
+        module_path.as_posix(),
+    ])
 
 
 def setup(app: Sphinx) -> None:
