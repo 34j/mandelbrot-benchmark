@@ -77,6 +77,7 @@ lint.ignore = [
   "S404",
   "SIM108",
 ]
+lint.extend-per-file-ignores."tests/test_dunder_main.py" = [ "S603" ]
 
 [tool.pyproject-fmt]
 max_supported_python = "3.14"
