@@ -8,9 +8,7 @@ version = "1.1.4"
 description = "Benchmark Numba, Taichi, Warp, CuPy Kernel, Triton using Mandelbrot set"
 readme = "README.md"
 license = "MIT"
-authors = [
-  { name = "34j", email = "34j.95a2p@simplelogin.com" },
-]
+authors = [ { name = "34j" } ]
 requires-python = ">=3.12,<3.14"
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
