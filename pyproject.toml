@@ -11,7 +11,7 @@ license = "MIT"
 authors = [
   { name = "34j", email = "34j.95a2p@simplelogin.com" },
 ]
-requires-python = ">=3.12"
+requires-python = ">=3.12,<3.14"
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
   "Intended Audience :: Developers",
@@ -20,14 +20,14 @@ classifiers = [
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
-  "Programming Language :: Python :: 3.14",
   "Topic :: Software Development :: Libraries",
 ]
 dependencies = [
   "aquarel>=0.0.7",
   "array-api-compat>=1.11.2",
   "cm-time>=0.1.2",
-  "jax[cuda12]>=0.4.30",
+  "jax>=0.4.30; sys_platform!='linux'",
+  "jax[cuda12]>=0.4.30; sys_platform=='linux'",
   "matplotlib>=3.9.4",
   "numba>=0.60",
   "numpy<=2.3.4",
