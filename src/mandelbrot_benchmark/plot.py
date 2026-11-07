@@ -13,9 +13,7 @@ def plot_mandelbrot(
 ) -> None:
     """Plot the Mandelbrot set."""
     ax = ax or plt.gca()
-    im = ax.imshow(
-        z, cmap="jet", interpolation="bilinear", extent=extent, origin="lower"
-    )
+    im = ax.imshow(z, cmap="jet", interpolation="bilinear", extent=extent, origin="lower")
     ax.set_title("Mandelbrot Set")
     ax.set_xlabel("Re")
     ax.set_ylabel("Im")

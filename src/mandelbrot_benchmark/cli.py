@@ -53,9 +53,7 @@ def benchmark(
             leave=False,
         ):
             # Create a grid of complex numbers
-            x, y = np.meshgrid(
-                np.linspace(-2.0, 1.0, size), np.linspace(-1.5, 1.5, size)
-            )
+            x, y = np.meshgrid(np.linspace(-2.0, 1.0, size), np.linspace(-1.5, 1.5, size))
             c = x + 1j * y
             c = torch.asarray(c, dtype=torch.complex64, device=device)
 
@@ -78,14 +76,12 @@ def benchmark(
                         str(z[0, 0].item())
                     if i == 0:
                         continue
-                    data.append(
-                        {
-                            "backend": backend,
-                            "device": device,
-                            "time": t.elapsed,
-                            "size": size**2,
-                        }
-                    )
+                    data.append({
+                        "backend": backend,
+                        "device": device,
+                        "time": t.elapsed,
+                        "size": size**2,
+                    })
                     torch.cuda.empty_cache()
     df = pd.DataFrame(data)
     df.to_csv("results.csv", index=False)
