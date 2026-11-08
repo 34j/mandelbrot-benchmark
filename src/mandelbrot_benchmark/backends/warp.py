@@ -69,9 +69,7 @@ def mandelbrot_warp(c: torch.Tensor) -> torch.Tensor:
     xp = array_namespace(c)
     out = wp.empty(shape=c.shape, dtype=wp.int32, device=device)
     c = xp.stack([c.real, c.imag], axis=-1)
-    field = wp.array(
-        c, dtype=wp.vec2d if c.dtype == torch.float64 else wp.vec2f, device=device
-    )
+    field = wp.array(c, dtype=wp.vec2d if c.dtype == torch.float64 else wp.vec2f, device=device)
     wp.launch(
         kernel=_mandelbrot_kernel,
         dim=c.shape,

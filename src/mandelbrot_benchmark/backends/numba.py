@@ -47,5 +47,4 @@ def mandelbrot_numba(c: Any) -> Any:
     if "cuda" in str(c.device):
         c = as_cuda_array(c)
         return _mandelbrot_numba_cuda(c)
-    else:
-        return _mandelbrot_numba(c)
+    return _mandelbrot_numba(c)
