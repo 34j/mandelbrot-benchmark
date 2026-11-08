@@ -4,7 +4,7 @@ requires = [ "setuptools>=77.0.3" ]
 
 [project]
 name = "mandelbrot-benchmark"
-version = "1.1.4"
+version = "1.2.0"
 description = "Benchmark Numba, Taichi, Warp, CuPy Kernel, Triton using Mandelbrot set"
 readme = "README.md"
 license = "MIT"
