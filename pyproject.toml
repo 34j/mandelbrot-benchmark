@@ -22,7 +22,7 @@ classifiers = [
 ]
 dependencies = [
   "aquarel>=0.0.7",
-  "array-api-compat>=1.11.2",
+  "array-api-compat>=1.16.0",
   "cm-time>=0.1.2",
   "jax>=0.4.30; sys_platform!='linux'",
   "jax[cuda12]>=0.4.30; sys_platform=='linux'",
