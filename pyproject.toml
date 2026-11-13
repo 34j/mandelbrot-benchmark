@@ -27,7 +27,7 @@ dependencies = [
   "jax>=0.4.30; sys_platform!='linux'",
   "jax[cuda12]>=0.4.30; sys_platform=='linux'",
   "matplotlib>=3.9.4",
-  "numba>=0.60",
+  "numba>=0.68.1",
   "numpy<=2.3.4",
   "pandas>=2.3.1",
   "pydlpack>=0.2.1",
